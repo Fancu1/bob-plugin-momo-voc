@@ -35,12 +35,22 @@
 
 ## 开发
 
+### 打包
+
 修改项目代码后，执行以下命令将自动基于最新代码生成插件压缩包：
 
 ```bash
 ./build-plugin.sh
 ```
 
-## 许可证
+### 调试
+
+该项目的 log 会输出在 `~/Library/Containers/com.hezongyidev.Bob/Data/Documents/InstalledPluginSandbox/bobplugin.momo-voc/momo-voc.log` 文件中（可能需要根据实际情况调整）。
+
+并且支持在翻译页面输入 `!debug` 调整部分信息:
+
+![!debug](./docs/images/debug.png)
+
+## License
 
 本项目采用 MIT 许可证 - 查看 [LICENSE](../LICENSE) 文件了解详情。

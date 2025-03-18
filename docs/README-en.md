@@ -35,11 +35,21 @@ Currently, only words or phrases are supported; sentences cannot be added.
 
 ## Development
 
+### Build
+
 Modify the project code and execute the following command to automatically generate the plugin zip file based on the latest code:
 
 ```bash
 ./build-plugin.sh
 ```
+
+### Debug
+
+The log of this project will be output to the `~/Library/Containers/com.hezongyidev.Bob/Data/Documents/InstalledPluginSandbox/bobplugin.momo-voc/momo-voc.log` file (possibly needs to be adjusted according to actual conditions).
+
+And supports inputting `!debug` in the translation page to adjust some information:
+
+![!debug](./images/debug.png)
 
 ## License
 
