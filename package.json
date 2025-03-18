@@ -1,0 +1,32 @@
+{
+    "name": "momo-voc",
+    "version": "1.0.0",
+    "description": "Bob 查询的单词导入到墨墨背单词",
+    "main": "main.js",
+    "author": {
+      "name": "Fancu1",
+      "email": "wangpeixian01@gmail.com"
+    },
+    "license": "MIT",
+    "homepage": "https://github.com/Fancu1/bob-plugin-momo-voc",
+    "repository": {
+      "type": "git",
+      "url": "https://github.com/Fancu1/bob-plugin-momo-voc.git"
+    },
+    "keywords": [
+      "bob-plugin",
+      "maimemo",
+      "momo",
+      "momo-vocabulary",
+      "translator",
+      "notebook",
+      "wordbook"
+    ],
+    "scripts": {
+      "clean": "rm -rf dist",
+      "build": "npm run clean && mkdir -p dist && cp info.json main.js dist/ && cp -r src dist/"
+    },
+    "engines": {
+      "node": ">=14"
+    }
+  }

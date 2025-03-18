@@ -1,0 +1,30 @@
+{
+    "identifier": "bobplugin.momo-voc",
+    "version": "1.0.0",
+    "category": "translate",
+    "name": "墨墨背单词",
+    "summary": "导入单词或词组到「墨墨背单词」",
+    "author": "Fancu1 <wangpeixian01@gmail.com>",
+    "homepage": "https://github.com/Fancu1/bob-plugin-momo-voc",
+    "minBobVersion": "0.5.0",
+    "options": [
+      {
+        "identifier": "momoToken",
+        "type": "text",
+        "title": "墨墨背单词 Token",
+        "desc": "请填写墨墨背单词 Token。获取方式：打开墨墨背单词 App，在「我的 > 更多设置 > 实验功能 > 开放 API」申请并复制 Token",
+        "textConfig": {
+          "type": "secure"
+        }
+      },
+      {
+        "identifier": "notepadName",
+        "type": "text",
+        "title": "墨墨云词库名称",
+        "desc": "请填写墨墨云词库名称，该词库将作为插件添加单词的默认词库。如果不填，则默认使用名为 Bob-Plugin 的词库。如果词库不存在，将会自动创建。",
+        "textConfig": {
+          "type": "visible"
+        }
+      }
+    ]
+  }
