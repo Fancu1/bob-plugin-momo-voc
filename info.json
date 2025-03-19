@@ -6,6 +6,7 @@
     "summary": "导入单词或词组到「墨墨背单词」",
     "author": "Fancu1 <wangpeixian01@gmail.com>",
     "homepage": "https://github.com/Fancu1/bob-plugin-momo-voc",
+    "appcast": "https://github.com/Fancu1/bob-plugin-momo-voc/raw/main/appcast.json",
     "minBobVersion": "0.5.0",
     "options": [
       {
