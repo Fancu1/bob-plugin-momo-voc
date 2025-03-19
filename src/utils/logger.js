@@ -99,38 +99,10 @@ function error(message) {
   }
 }
 
-/**
- * clear log file
- */
-function clearLogFile() {
-  try {
-    if ($file.exists(LOG_FILE_PATH)) {
-      $file.write({
-        data: $data.fromUTF8(""),
-        path: LOG_FILE_PATH
-      });
-      $log.info("log file cleared");
-    }
-  } catch (e) {
-    $log.error(`clear log file failed: ${e.message}`);
-  }
-}
-
-/**
- * get log file path
- * @returns {string} log file path
- */
-function getLogFilePath() {
-  return LOG_FILE_PATH;
-}
-
 module.exports = {
   LOG_LEVEL,
-  setLogLevel,
   debug,
   info,
   warn,
   error,
-  clearLogFile,
-  getLogFilePath
 }; 

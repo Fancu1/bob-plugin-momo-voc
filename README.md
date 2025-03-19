@@ -8,9 +8,9 @@
 
 参考了 [chriscurrycc/bob-plugin-maimemo-notebook](https://github.com/chriscurrycc/bob-plugin-maimemo-notebook) 的实现。
 
-相较于`bob-plugin-maimemo-notebook`插件，额外支持异步添加单词，效率更高。且代码更加符合 Bob 插件的规范，方便后续功能新增和维护。
+相较于`bob-plugin-maimemo-notebook`插件，额外支持异步添加单词，效率更高。且代码更加符合 Bob 插件的规范(1.14)，更加方便后续功能新增和维护。
 
-目前仅支持添加单词或词组，不支持添加句子。
+**当前限制**：仅支持添加单词或词组，暂不支持句子。
 
 ## 功能
 
@@ -18,6 +18,16 @@
 - 支持指定已有云词本或创建新云词本
 - 异步添加单词，无需等待添加完成
 - 自动缓存待添加单词, 支持失败重试
+- 支持词形还原，将单词还原为词根形式，便于记忆
+
+### 词形还原功能
+
+词形还原旨在解决不同场景下单词形态不一致的问题（例如：`running` 还原为 `run`），帮助用户更高效地记忆单词。
+
+**注意**：
+
+- 该功能依赖 AI 服务，需在插件配置中填写 AI 服务的 Base URL、API Key 和模型名称。
+- 默认情况下，词形还原功能处于关闭状态。如需启用，请在插件设置界面手动打开。
 
 ## 使用方法
 
@@ -45,11 +55,7 @@
 
 ### 调试
 
-该项目的 log 会输出在 `~/Library/Containers/com.hezongyidev.Bob/Data/Documents/InstalledPluginSandbox/bobplugin.momo-voc/momo-voc.log` 文件中（可能需要根据实际情况调整）。
-
-并且支持在翻译页面输入 `!debug` 调整部分信息:
-
-![!debug](./docs/images/debug.png)
+该项目的 log 会输出在 `~/Library/Containers/com.hezongyidev.Bob/Data/Documents/InstalledPluginSandbox/bobplugin.momo-voc/momo-voc.log` 文件中（具体路径需要根据实际环境调整）。
 
 ## License
 

@@ -3,6 +3,7 @@
  */
 
 const { createNotepad, addWordsToNotepad, listNotepads } = require('./api/momo');
+const { lemmatizeWord } = require('./api/ai');
 const { cachePendingWords, removePendingWords} = require('./utils/cache');
 const { DEFAULT_NOTEPAD_NAME } = require('./config');
 const logger = require('./utils/logger');
@@ -11,9 +12,10 @@ const logger = require('./utils/logger');
  * process add words core logic
  * @param {string[]} words words array
  * @param {string} notepadName notepad name
+ * @param {boolean} useLemmatization whether to use AI to lemmatize words
  * @returns {Promise<void>}
  */
-async function processAddWords(words, notepadName) {
+async function processAddWords(words, notepadName, useLemmatization = false) {
   let result = "";
   let error = false;
   
@@ -21,9 +23,24 @@ async function processAddWords(words, notepadName) {
   
   logger.info(`process add words: "${notepadName}": ${words.join(", ")}`);
   
+  // Lemmatize words if enabled
+  let processedWords = words;
+  if (useLemmatization) {
+    try {
+      logger.debug("Starting word lemmatization...");
+      const lemmatizationPromises = words.map(word => lemmatizeWord(word));
+      processedWords = await Promise.all(lemmatizationPromises);
+      logger.debug(`Lemmatization complete: ${words.join(',')} -> ${processedWords.join(',')}`);
+    } catch (err) {
+      logger.error(`Lemmatization failed: ${err.message}`);
+      // Continue with original words if lemmatization fails
+      processedWords = words;
+    }
+  }
+  
   // Cache the words before attempting to add
   cachePendingWords({
-    words,
+    words: processedWords,
     notepadName
   });
   logger.debug(`cached pending words`);
@@ -39,11 +56,11 @@ async function processAddWords(words, notepadName) {
       const notepadId = notepad.id;
       logger.info(`notepad "${notepadName}" exists, id: ${notepadId}`);
       
-      logger.info(`add words to notepad "${notepadName}": ${words.join(", ")}`);
-      result = await addWordsToNotepad(notepadId, words);
+      logger.info(`add words to notepad "${notepadName}": ${processedWords.join(", ")}`);
+      result = await addWordsToNotepad(notepadId, processedWords);
     } else {
       logger.info(`notepad "${notepadName}" not exists, create new notepad and add words`);
-      result = await createNotepad(words, notepadName);
+      result = await createNotepad(processedWords, notepadName);
     }
   } catch (err) {
     error = true;
@@ -54,30 +71,12 @@ async function processAddWords(words, notepadName) {
     if (!error) {
       logger.info(`task completed: ${result}`);
       // remove completed words from cache
-      removePendingWords(words, notepadName);
+      removePendingWords(processedWords, notepadName);
       logger.debug(`removed completed words from cache`);
     }
   }
 }
 
-/**
- * clear log file
- */
-function clearDebugLogs() {
-  logger.clearLogFile();
-  return "log file cleared";
-}
-
-/**
- * get log file path
- * @returns {string} log file path
- */
-function getDebugLogPath() {
-  return logger.getLogFilePath();
-}
-
 module.exports = {
   processAddWords,
-  clearDebugLogs,
-  getDebugLogPath
 };

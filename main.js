@@ -4,8 +4,6 @@
 
 const { 
   processAddWords, 
-  clearDebugLogs, 
-  getDebugLogPath 
 } = require('./src/index');
 
 function supportLanguages() {
@@ -18,7 +16,7 @@ function supportLanguages() {
  */
 function translate(query) {
   const { text, detectFrom, onCompletion } = query;
-  const { momoToken, notepadName } = $option;
+  const { momoToken, notepadName, enableLemmatization, aiApiKey } = $option;
 
   if (detectFrom !== "en") {
     onCompletion({
@@ -40,12 +38,6 @@ function translate(query) {
     return;
   }
 
-  // handle debug commands
-  if (text.trim().startsWith("!debug")) {
-    handleDebugCommands(text, onCompletion);
-    return;
-  }
-
   const trimmedText = text.trim();
   
   if (!trimmedText || trimmedText.split(/\s+/).length > 2) {
@@ -60,62 +52,17 @@ function translate(query) {
   
   const word = trimmedText;
   
+  const useLemmatization = (enableLemmatization === '1' && aiApiKey);
+  
   // return success response immediately
   onCompletion({
     result: {
-      toParagraphs: [`${word} 添加成功`],
+      toParagraphs: [`${word} 添加${useLemmatization ? ' (将使用词形还原)' : ''}成功`],
     },
   });
 
-  processAddWords([word], notepadName);
+  processAddWords([word], notepadName, useLemmatization);
 }
-
-/**
- * handle debug commands
- * @param {string} text input text
- * @param {Function} onCompletion completion callback
- */
-function handleDebugCommands(text, onCompletion) {
-  const command = text.trim().toLowerCase();
-  
-  if (command === "!debug clear") {
-    clearDebugLogs();
-    onCompletion({
-      result: {
-        toParagraphs: ["日志已清空"],
-      },
-    });
-  } else if (command === "!debug path") {
-    onCompletion({
-      result: {
-        toParagraphs: [`日志路径: ~/Library/Containers/com.hezongyidev.Bob/Data/Documents/InstalledPluginSandbox/你的插件ID/momo-voc-debug.log`],
-      },
-    });
-  } else if (command === "!debug help") {
-    onCompletion({
-      result: {
-        toParagraphs: [
-          "=== 调试命令帮助 ===",
-          "!debug clear - 清空日志文件",
-          "!debug path - 显示日志文件路径",
-          "!debug help - 显示此帮助信息"
-        ],
-      },
-    });
-  } else {
-    onCompletion({
-      result: {
-        toParagraphs: [
-          "未知的调试命令，可用命令：",
-          "!debug clear - 清空日志文件",
-          "!debug path - 显示日志文件路径",
-          "!debug help - 显示帮助信息"
-        ],
-      },
-    });
-  }
-}
-
 
 module.exports = {
   supportLanguages,

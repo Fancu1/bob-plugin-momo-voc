@@ -8,9 +8,9 @@ This plugin allows you to add words or phrases queried in Bob to the MoMo Vocabu
 
 This plugin is inspired by [chriscurrycc/bob-plugin-maimemo-notebook](https://github.com/chriscurrycc/bob-plugin-maimemo-notebook).
 
-Compared to the `bob-plugin-maimemo-notebook` plugin, this version additionally supports asynchronous word addition for improved efficiency. The code also better adheres to Bob plugin standards, making it easier to add new features and maintain the plugin.
+Compared to the `bob-plugin-maimemo-notebook` plugin, this version additionally supports asynchronous word addition for improved efficiency. The code also better adheres to Bob plugin standards (1.14), making it easier to add new features and maintain the plugin.
 
-Currently, only words or phrases are supported; sentences cannot be added.
+**Current limitation**: Only words or phrases are supported; sentences cannot be added.
 
 ## Features
 
@@ -18,6 +18,16 @@ Currently, only words or phrases are supported; sentences cannot be added.
 - Support for specifying existing cloud wordbooks or creating new ones
 - Asynchronous word addition without waiting for completion
 - Automatic caching of words pending addition, with retry support for failed attempts
+- Support for lemmatization, converting words to their root form for easier memorization
+
+### Lemmatization Feature
+
+Lemmatization aims to solve the problem of inconsistent word forms in different contexts (e.g., converting "running" to "run"), helping users memorize words more efficiently.
+
+**Note**:
+
+- This feature relies on AI services, requiring Base URL, API Key, and model name to be filled in the plugin configuration.
+- By default, the lemmatization feature is turned off. To enable it, please manually activate it in the plugin settings interface.
 
 ## Usage Instructions
 
@@ -47,10 +57,6 @@ Modify the project code and execute the following command to automatically gener
 
 The log of this project will be output to the `~/Library/Containers/com.hezongyidev.Bob/Data/Documents/InstalledPluginSandbox/bobplugin.momo-voc/momo-voc.log` file (possibly needs to be adjusted according to actual conditions).
 
-And supports inputting `!debug` in the translation page to adjust some information:
-
-![!debug](./images/debug.png)
-
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+This project is licensed under the MIT License - see the [LICENSE](../LICENSE) file for details.

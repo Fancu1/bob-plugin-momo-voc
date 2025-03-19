@@ -26,6 +26,53 @@
         "textConfig": {
           "type": "visible"
         }
+      },
+      {
+        "identifier": "aiBaseUrl",
+        "type": "text",
+        "title": "AI API URL",
+        "defaultValue": "https://api.openai.com",
+        "desc": "AI 服务的 Base URL，用于单词形态转换。默认为 https://api.openai.com",
+        "textConfig": {
+          "type": "visible",
+          "placeholderText": "https://api.openai.com"
+        }
+      },
+      {
+        "identifier": "aiModel",
+        "type": "text",
+        "title": "模型名称",
+        "defaultValue": "gpt-3.5-turbo",
+        "desc": "用于单词形态转换的 AI 模型名称，仅在启用「词形还原」时需要填写",
+        "textConfig": {
+          "type": "visible",
+          "placeholderText": "gpt-3.5-turbo"
+        }
+      },
+      {
+        "identifier": "aiApiKey",
+        "type": "text",
+        "title": "API Key",
+        "desc": "AI 服务的 API 的密钥，仅在启用「词形还原」时需要填写",
+        "textConfig": {
+          "type": "secure"
+        }
+      },
+      {
+        "identifier": "enableLemmatization",
+        "type": "menu",
+        "title": "启用词形还原",
+        "defaultValue": "0",
+        "menuValues": [
+          {
+            "title": "启用",
+            "value": "1"
+          },
+          {
+            "title": "禁用",
+            "value": "0"
+          }
+        ]
       }
     ]
   }
