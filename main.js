@@ -1,6 +1,5 @@
 /**
- * Bob 翻译插件入口文件
- * 墨墨云词本插件 - 将查询的单词添加到墨墨背单词
+ * add word to momo vocab
  */
 
 const { 
