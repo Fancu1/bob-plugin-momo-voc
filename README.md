@@ -33,7 +33,7 @@
 
 1. 安装 [Bob](https://bobtranslate.com/)
 
-2. 下载此插件并安装（点击插件图标 > 安装插件 > 选择下载的插件文件）
+2. 下载此插件并安装（点击插件图标 > 安装插件 > 选择下载的插件文件）[下载地址](https://github.com/Fancu1/bob-plugin-momo-voc/releases/download/1.0.1/bob-plugin-momo-voc-1.0.1.bobplugin)
 
 3. 打开墨墨背单词 App，在「我的 > 更多设置 > 实验功能 > 开放 API」申请并复制 Token
 

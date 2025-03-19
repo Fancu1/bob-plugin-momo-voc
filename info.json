@@ -1,6 +1,6 @@
 {
-    "identifier": "bobplugin.momo-voc",
-    "version": "1.0.0",
+    "identifier": "bob-plugin.momo-voc",
+    "version": "1.0.1",
     "category": "translate",
     "name": "墨墨背单词",
     "summary": "导入单词或词组到「墨墨背单词」",
