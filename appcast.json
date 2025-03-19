@@ -1,6 +1,14 @@
 {
-  "identifier": "bobplugin.momo-voc",
+  "identifier": "bob-plugin.momo-voc",
   "versions": [
+    {
+      "version": "1.0.1",
+      "desc": "Reduce words to their root form through AI services",
+      "sha256": "83fe3f81e0246d24ccf40dd2ba5420320ab308443a90f1ecdf12972ccf4deb42",
+      "url": "https://github.com/Fancu1/bob-plugin-momo-voc/releases/download/1.0.1/bob-plugin-momo-voc-1.0.1.bobplugin",
+      "minBobVersion": "0.5.0",
+      "timestamp": 1742391223
+    },
     {
       "version": "1.0.0",
       "desc": "Support add words or phrases queried in Bob to the MoMo Vocabulary cloud wordbook",
