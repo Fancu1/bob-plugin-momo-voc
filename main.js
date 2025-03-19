@@ -47,31 +47,28 @@ function translate(query) {
     return;
   }
 
-  const paragraphs = text.split("\n").filter((line) => !!line.trim());
-  // extract words, length > 2 will be ignored
-  const words = paragraphs[0]
-    .split(",")
-    .map((word) => word.trim())
-    .filter((word) => !!word && word.split(/\s+/).length < 3);
+  const trimmedText = text.trim();
   
-  if (words.length === 0) {
+  if (!trimmedText || trimmedText.split(/\s+/).length > 2) {
     onCompletion({
       error: {
-        type: "notFound",
-        message: "未检测到单词",
+        type: "invalidFormat",
+        message: "未识别到有效单词",
       },
     });
     return;
   }
-
+  
+  const word = trimmedText;
+  
   // return success response immediately
   onCompletion({
     result: {
-      toParagraphs: [`单词 ${words.join(", ")} 添加成功`],
+      toParagraphs: [`${word} 添加成功`],
     },
   });
 
-  processAddWords(words, notepadName);
+  processAddWords([word], notepadName);
 }
 
 /**
