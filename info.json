@@ -62,7 +62,7 @@
         "identifier": "enableLemmatization",
         "type": "menu",
         "title": "启用词形还原",
-        "defaultValue": "1",
+        "defaultValue": "0",
         "menuValues": [
           {
             "title": "启用",
