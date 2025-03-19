@@ -5,19 +5,9 @@
 
 const config = require('../config');
 
-const { LOG_FILE_PATH, LOG_LEVEL } = config;
+const { LOG_FILE_PATH, LOG_LEVEL, DEFAULT_LOG_LEVEL } = config;
 
-let currentLogLevel = LOG_LEVEL.INFO;
-
-/**
- * set log level
- * @param {number} level log level
- */
-function setLogLevel(level) {
-  if (level >= LOG_LEVEL.DEBUG && level <= LOG_LEVEL.ERROR) {
-    currentLogLevel = level;
-  }
-}
+let currentLogLevel = DEFAULT_LOG_LEVEL;
 
 /**
  * get current timestamp

@@ -14,6 +14,7 @@ const LOG_LEVEL = {
   INFO: 2,
   DEBUG: 3
 };
+const DEFAULT_LOG_LEVEL = LOG_LEVEL.INFO;
 
 // cache
 const PENDING_WORDS_CACHE_PATH = "$sandbox/pending_words.json";
@@ -24,4 +25,5 @@ module.exports = {
   DEFAULT_NOTEPAD_NAME,
   LOG_FILE_PATH,
   LOG_LEVEL,
+  DEFAULT_LOG_LEVEL
 };
