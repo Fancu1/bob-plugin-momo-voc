@@ -90,11 +90,9 @@ function handleDebugCommands(text, onCompletion) {
       },
     });
   } else if (command === "!debug path") {
-    // return logs file path
-    const path = getDebugLogPath();
     onCompletion({
       result: {
-        toParagraphs: [`日志路径类似于:", "~/Library/Containers/com.hezongyidev.Bob/Data/Documents/InstalledPluginSandbox/你的插件ID/momo-voc-debug.log"`],
+        toParagraphs: [`日志路径: ~/Library/Containers/com.hezongyidev.Bob/Data/Documents/InstalledPluginSandbox/你的插件ID/momo-voc-debug.log`],
       },
     });
   } else if (command === "!debug help") {

@@ -1,0 +1,13 @@
+{
+  "identifier": "bobplugin.momo-voc",
+  "versions": [
+    {
+      "version": "1.0.0",
+      "desc": "Support add words or phrases queried in Bob to the MoMo Vocabulary cloud wordbook",
+      "sha256": "d3e75c92b6f865848f052b747ab3406d260708bf0683f83929380e2c808fff32",
+      "url": "https://github.com/Fancu1/bob-plugin-momo-voc/releases/download/1.0.0/bob-plugin-momo-voc-1.0.0.bobplugin",
+      "minBobVersion": "0.5.0",
+      "timestamp": 1742350690
+    }
+  ]
+}

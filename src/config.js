@@ -9,10 +9,10 @@ const DEFAULT_NOTEPAD_NAME = "Bob-Plugin";
 // log
 const LOG_FILE_PATH = "$sandbox/momo-voc.log";
 const LOG_LEVEL = {
-  DEBUG: 0,
-  INFO: 1,
-  WARN: 2,
-  ERROR: 3
+  ERROR: 0,
+  WARN: 1,
+  INFO: 2,
+  DEBUG: 3
 };
 
 // cache
