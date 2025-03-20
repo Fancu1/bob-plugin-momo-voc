@@ -4,7 +4,7 @@
 
 const { PENDING_WORDS_CACHE_PATH } = require('../config');
 const logger = require('./logger');
-
+const { arrayToString } = require('./tools');
 /**
  * @typedef {Object} CachedNotepad
  * @property {string} name - notepad name
@@ -98,10 +98,12 @@ function cachePendingWords({ words, notepadName }) {
   // Add new words (automatically handles deduplication via Set)
   let newWordsCount = 0;
   words.forEach(word => {
-    const lowerWord = word.toLowerCase();
-    if (!cache[notepadName].has(lowerWord)) {
-      cache[notepadName].add(lowerWord);
-      newWordsCount++;
+    if (word && typeof word === 'string') {
+      const lowerWord = word.toLowerCase().trim();
+      if (lowerWord && !cache[notepadName].has(lowerWord)) {
+        cache[notepadName].add(lowerWord);
+        newWordsCount++;
+      }
     }
   });
   
@@ -127,8 +129,12 @@ function removePendingWords(words, notepadName) {
     return;
   }
   
-  // Convert words to lowercase for case-insensitive matching
-  const wordsToRemove = new Set(words.map(word => word.toLowerCase()));
+  // Convert words to lowercase and trim for case-insensitive matching
+  const wordsToRemove = new Set(words.map(word => 
+    (typeof word === 'string') ? word.toLowerCase().trim() : String(word).toLowerCase().trim()
+  ).filter(Boolean));
+  
+  logger.debug(`Attempting to remove ${wordsToRemove.size} words from cache`);
   
   // Read the current cache
   const cache = readCache();
@@ -173,7 +179,25 @@ function removePendingWords(words, notepadName) {
   }
 }
 
+/**
+ * Get all cached words from all notepads
+ * @returns {string[]} Array of all unique cached words
+ */
+function getAllCachedWords() {
+  const cache = readCache();
+  
+  // Collect all unique words from all notepads
+  const allWordsSet = new Set();
+  
+  Object.values(cache).forEach(wordSet => {
+    wordSet.forEach(word => allWordsSet.add(word));
+  });
+  
+  return Array.from(allWordsSet);
+}
+
 module.exports = {
   cachePendingWords,
   removePendingWords,
+  getAllCachedWords,
 };

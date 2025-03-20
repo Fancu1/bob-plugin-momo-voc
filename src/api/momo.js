@@ -4,7 +4,7 @@
 
 const { API_ENDPOINT } = require('../config');
 const logger = require('../utils/logger');
-
+const { arrayToString } = require('../utils/tools');
 /**
  * get request header
  * @returns {Object} request header
@@ -40,14 +40,19 @@ async function listNotepads() {
 /**
  * create new notepad and add words
  * @param {string[]} words words to add
+ * @param {string} notepadName name of the notepad to create
  * @returns {Promise<string>} success message
  */
 async function createNotepad(words, notepadName) {
   const header = getHeader();
-  const todayDate = new Date().toLocaleDateString("en-CA");
   
-  logger.debug(`create new notepad, date: ${todayDate}, words: ${words.join(", ")}`);
+  if (!Array.isArray(words)) {
+    logger.warn("createNotepad received non-array words input, converting to array");
+    words = words.toString().split(",").map(word => word.trim());
+  }
 
+  logger.debug(`Creating notepad "${notepadName}" with words: ${arrayToString(words)}`);
+  
   return $http
     .request({
       method: "POST",
@@ -56,7 +61,7 @@ async function createNotepad(words, notepadName) {
       body: {
         notepad: {
           status: "PUBLISHED",
-          content: `# ${todayDate}\n${words.join("\n")}\n`,
+          content: `${words.join("\n")}\n`,
           title: notepadName,
           brief: "new notepad",
           tags: ["词典"],
@@ -68,8 +73,7 @@ async function createNotepad(words, notepadName) {
       if (response.success && response.data?.notepad) {
         const notepadId = response.data.notepad.id;
         logger.info(`notepad created successfully, id: ${notepadId}`);
-        
-        return `notepad created successfully, words ${words.join(", ")} added`;
+        return `Notepad "${notepadName}" created with ${words.length} words`;
       } else {
         logger.error(`create notepad failed, response: ${JSON.stringify(response)}`);
         throw new Error(response.message);
@@ -80,14 +84,18 @@ async function createNotepad(words, notepadName) {
 /**
  * add words to existing notepad
  * @param {string} notepadId notepad id
- * @param {string[]} words words to add
+ * @param {string[]} words words or phrases to add
  * @returns {Promise<string>} success message
  */
 async function addWordsToNotepad(notepadId, words) {
   const header = getHeader();
-  const todayDate = new Date().toLocaleDateString("en-CA");
   
-  logger.debug(`add words to notepad ${notepadId}, words: ${words.join(", ")}`);
+  if (!Array.isArray(words)) {
+    logger.warn("addWordsToNotepad received non-array words input, converting to array");
+    words = words.toString().split(",").map(word => word.trim());
+  }
+  
+  logger.debug(`Adding words to notepad ${notepadId}, words: ${arrayToString(words)}`);
 
   return $http
     .request({
@@ -100,19 +108,13 @@ async function addWordsToNotepad(notepadId, words) {
       
       if (response.success && response.data && response.data.notepad) {
         const { status, content, title, brief, tags } = response.data.notepad;
-        const lines = content.split("\n").map((line) => line.trim());
-        let targetLineIndex = lines.findIndex((line) =>
-          line.startsWith(`# ${todayDate}`)
-        );
+        const lines = content.split("\n").map((line) => line.trim()).filter(line => line);
 
-        if (targetLineIndex === -1) {
-          logger.debug(`today date not found, add new date title`);
-          lines.unshift("");
-          lines.unshift(`# ${todayDate}`);
-          targetLineIndex = 0;
-        }
-        lines.splice(targetLineIndex + 1, 0, ...words);
-        logger.debug(`new words inserted after date title`);
+        words.forEach((word) => {
+          if (word.trim()) {
+            lines.push(word);
+          }
+        });
 
         return {
           status,
@@ -127,13 +129,19 @@ async function addWordsToNotepad(notepadId, words) {
       }
     })
     .then((notepad) => {
-      logger.debug(`prepare to update notepad ${notepadId}`);
+      logger.debug(`Prepare to update notepad ${notepadId}`);
       return $http.request({
         method: "POST",
         url: `${API_ENDPOINT}/notepads/${notepadId}`,
         header,
         body: {
-          notepad,
+          notepad: {
+            status: "PUBLISHED",
+            content: notepad.content,
+            title: notepad.title,
+            brief: notepad.brief,
+            tags: notepad.tags,
+          },
         },
       });
     })
@@ -141,7 +149,7 @@ async function addWordsToNotepad(notepadId, words) {
       const response = resp.data;
       
       if (response?.success) {
-        const successMsg = `words ${words.join(", ")} added to notepad ${notepadId}`;
+        const successMsg = `${words.length} words added to notepad ${notepadId}`;
         logger.info(successMsg);
         return successMsg;
       } else {
