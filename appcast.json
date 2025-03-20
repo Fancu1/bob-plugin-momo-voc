@@ -7,7 +7,7 @@
       "sha256": "83fe3f81e0246d24ccf40dd2ba5420320ab308443a90f1ecdf12972ccf4deb42",
       "url": "https://github.com/Fancu1/bob-plugin-momo-voc/releases/download/1.0.1/bob-plugin-momo-voc-1.0.1.bobplugin",
       "minBobVersion": "0.5.0",
-      "timestamp": 1742391223
+      "timestamp": 1742450340128
     },
     {
       "version": "1.0.0",
@@ -15,7 +15,7 @@
       "sha256": "d3e75c92b6f865848f052b747ab3406d260708bf0683f83929380e2c808fff32",
       "url": "https://github.com/Fancu1/bob-plugin-momo-voc/releases/download/1.0.0/bob-plugin-momo-voc-1.0.0.bobplugin",
       "minBobVersion": "0.5.0",
-      "timestamp": 1742350690
+      "timestamp": 1742450340028
     }
   ]
 }
